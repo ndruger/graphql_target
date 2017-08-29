@@ -45,8 +45,11 @@ Result
 
 ## viewerのフィールドやrepositoryの引数はどこからわかるのか？
 
-[Introduction to GraphQL | GitHub Developer Guide](https://developer.github.com/v4/guides/intro-to-graphql/#discovering-the-graphql-api)でcurlで取得した[./github_graphql.json]の下記からわかる。
+[Introduction to GraphQL | GitHub Developer Guide](https://developer.github.com/v4/guides/intro-to-graphql/#discovering-the-graphql-api)でcurlで取得した[./github_graphql.json](./github_graphql.json)の下記からわかる。
 
+ただ、[Reference | GitHub Developer Guide](https://developer.github.com/v4/reference/)みたほうが早い。
+
+`viewer`フィールドの定義
 ```json
             {
               "name": "viewer",
@@ -66,6 +69,9 @@ Result
             }
 ```
 
+- `viewer`フィールドは`User`型である。
+
+`User`型の定義
 ```json
 
         {
@@ -135,7 +141,10 @@ Result
 
 ```
 
-## 書き込み
+- `User`型には`name`や`email`フィールドや引数付きの`repository`フィールドがある。
+- 引数付きの`repository`フィールドの必須の引数は`name`である。
+
+## データの更新
 
 issueを10件まで取得
 ```graphql
