@@ -204,3 +204,51 @@ mutation {
 ```
 
 - 複数の更新操作を一度のリクエストで行える。
+
+## Variables
+
+Query
+```graphql
+query ($limit: Int) { 
+  viewer { 
+    repository(name: "graphql_target") {
+      issues(first: $limit) {
+        edges {
+          node {
+            id
+          }
+        }
+      },
+    }
+  }
+```
+
+Query Variables
+```graphql
+{
+  "limit": 10
+}
+```
+
+Result
+```graphql
+{
+  "data": {
+    "viewer": {
+      "repository": {
+        "issues": {
+          "edges": [
+            {
+              "node": {
+                "id": "MDU6SXNzdWUyNTM0MDE1NzQ="
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+- Chrome Developer Toolsを見るとわかるが、送信前に$limitを解決しているのではなく、queryとvariablesを両方サーバに送ってサーバで解決をしている。
