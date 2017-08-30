@@ -252,3 +252,88 @@ Result
 ```
 
 - Chrome Developer Toolsを見るとわかるが、送信前に$limitを解決しているのではなく、queryとvariablesを両方サーバに送ってサーバで解決をしている。
+
+## Fragments
+
+Query
+```graphql
+query { 
+  viewer {
+    ...viewerFields
+    repository(name: "graphql_target") {
+      id,
+      name
+    }
+  }
+}
+
+fragment viewerFields on User {
+  name,
+  email
+}
+```
+
+Result
+```graphql
+{
+  "data": {
+    "viewer": {
+      "repository": {
+        "id": "MDEwOlJlcG9zaXRvcnkxMDE2Njg3MzQ=",
+        "name": "graphql_target"
+      },
+      "name": "ndruger",
+      "email": ""
+    }
+  }
+}
+```
+
+## Introspection
+
+Query
+```graphql
+query {
+  __type(name: "User") {
+    name
+    fields {
+      name
+      type {
+        name
+      }
+    }
+  }
+}
+```
+
+Result
+```graphql
+{
+  "data": {
+    "__type": {
+      "name": "User",
+      "fields": [
+        {
+          "name": "avatarUrl",
+          "type": {
+            "name": null
+          }
+        },
+        {
+          "name": "bio",
+          "type": {
+            "name": "String"
+          }
+        },
+        {
+          "name": "bioHTML",
+          "type": {
+            "name": null
+          }
+        },
+...省略...
+      ]
+    }
+  }
+}
+```
